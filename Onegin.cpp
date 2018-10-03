@@ -21,8 +21,6 @@ char** AllocateArrayOfStrs(char* buf, int* arrsize);
 int CompareStrsFromBeg(const void * str1, const void * str2);
 int CompareStrsFromEnd(const void * str1, const void * str2);
 char* AllocateNewBuf(char* buf, long int bufsize, long int* newbufsize);
-char* CleanTheStr(const char* str, char* newstr);
-char* StrFromEnd(const char* str, char* str_end);
 void WriteStrs(FILE* fptr, const char* fname, char** strs, long int numofstrs);
 void WriteBuf(FILE* fptr, const char* fname, char* buf, long int bufsize);
 

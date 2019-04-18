@@ -1,0 +1,136 @@
+main:                   ;make rets
+
+in
+pop  ax
+in 
+pop  bx
+in
+pop  cx
+
+call FindRoots
+
+jmp End
+
+
+FindRoots:
+push ax                
+push 0
+je zero_a
+call Quadratic_eq       ;if (a != 0)
+ret
+
+zero_a:                   
+call Linear_eq          ;if (a == 0)
+ret
+
+
+Linear_eq:
+push bx
+push 0
+je zero_b
+push cx                 ;if (b != 0)
+push bx                 ;x1 = -(c/b)
+div
+push -1
+mul
+pop [1]                 ;x1 = -(c/b)
+
+push 1 
+out                     ;print nRoots = 1
+
+push [1]
+out                     ;print x1 
+ret
+
+zero_b:
+push cx                 ;if (b == 0)
+push 0
+je zero_c
+
+push 0                  ;if (c != 0)
+out                     ;print nRoots = 0
+ret
+
+zero_c:
+push 3                  ;if (c != 0)
+out                     ;print nRoots = 3
+ret
+
+
+Quadratic_eq:
+
+push bx                 ;D = b*b - 4*a*c 
+push bx
+mul
+push 4
+push ax
+push cx
+mul
+mul
+sub
+
+pop  dx
+
+push dx
+push 0
+jna not_negative_D
+push 0                  if (D < 0)
+out                     ;print nRoots = 0
+ret
+
+not_negative_D:
+
+push dx
+fsqrt                   
+pop dx                  ;dx = sqrt(d)
+
+push dx
+push 0
+je zero_D
+push 2                  ;if (D > 0)
+out                     ;print nRoots = 2
+
+push 0                  ;x1 = (-b+sqrt_D)/(2*a)
+push bx
+sub
+push dx
+add
+push 2
+push ax
+mul
+div
+
+out                     ;print x1
+
+push 0                  ;x2 = (-b-sqrt_D)/(2*a)
+push bx
+sub
+push dx
+sub
+push 2
+push ax
+mul
+div
+
+out                     ;print x2
+ret
+
+zero_D:
+push 1                  ;if (D == 0)
+out                     ;print nRoots = 1
+
+push 0                  ;x1 = (-b)/(2*a);                  
+push bx
+sub
+push 2
+push ax
+mul
+div
+
+out                     ;print x1
+
+ret
+
+
+End:
+end

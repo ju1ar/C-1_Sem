@@ -1,0 +1,39 @@
+main:
+in
+pop  ax
+
+push ax
+pop  bx
+
+call fact
+
+push bx
+out
+
+meow
+jmp End
+
+
+fact:
+push ax
+push 1 
+jne mem
+ret
+
+mem:
+push ax
+push 1
+sub
+pop ax
+
+push bx
+push ax
+mul
+pop bx
+
+call fact
+
+ret
+
+End:
+end
